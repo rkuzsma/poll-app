@@ -29,7 +29,9 @@ class PollsController < ApplicationController
       group[:sum] += poll.value
     end
     [group_a,group_b].each do |group|
-      group[:mean] = group[:sum] / group[:count]
+      if group[:count] > 0
+        group[:mean] = group[:sum] / group[:count]
+      end
     end
     
     render :results
