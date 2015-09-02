@@ -1,0 +1,41 @@
+<%= form_for(@poll) do |f| %>
+  <% if @poll.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@poll.errors.count, "error") %> prohibited this poll from being saved:</h2>
+
+      <ul>
+      <% @poll.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <script>
+    function toggle() {
+      document.getElementById('question_1').style.display = 'none';
+      document.getElementById('question_2').style.display = 'block';
+    }
+  </script>
+  
+  <%= f.hidden_field :group_a %>
+  
+  <div id="question_1" style="display:block">
+    <p class="para">After a software engineer has voiced his/her opinion, is there more or less than a <%= @poll.anchor_percent %>% chance that he/she will change his/her opinion later?</p>
+    
+    <input type="radio" name="option_a" onClick="toggle();"> More than a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</input><br/>
+    <input type="radio" name="option_b" onClick="toggle();"> Less than or equal to a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</input>
+  </div>
+
+  <div id="question_2" style="display:none">
+    <p class="para">After a software engineer has voiced his/her opinion, what is your best estimate for the % chance that he/she will change his/her opinion later?</p>
+    
+    <div class="field">
+      <%= f.number_field :value %> % chance he/she will change his/her opinion
+    </div>
+    
+    <div class="actions">
+      <%= f.submit 'Submit' %>
+    </div>
+  </div>
+<% end %>

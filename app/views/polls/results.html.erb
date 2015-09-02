@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<div class="container" style="text-align:center">
+  
+  <h2>And the survey says...</h2>
+  
+  <h3>What is the % chance that an engineer will change his/her opinion after voicing it?</h3>
+  
+  <% @groups.each do |group| %>
+    <p class="para" style="font-size:2em;">
+      <b><%= group[:mean] %>%</b>  (from <%= group[:count] %> participants anchored at <b><%= group[:anchor_percent] %>%</b>)<br/>
+    </p>
+  <% end %>
+  
+  <%= image_tag "familyfeud.jpg" %>
+  
+  <div style="display:none">
+    <h3>Raw Data</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Anchor</th>
+          <th>Response</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @polls.each do |poll| %>
+          <tr>
+            <td><%= poll.anchor_percent %>%</td>
+            <td><%= poll.value %>%</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+</div>
