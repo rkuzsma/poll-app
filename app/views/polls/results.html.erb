@@ -1,19 +1,80 @@
 <p id="notice"><%= notice %></p>
 
-<div class="container" style="text-align:center">
+<div class="container" style="text-align:left">
   
-  <h2>And the survey says...</h2>
+  <!-- <%= image_tag "familyfeud.jpg" %> --> 
+  <!--
+  <div class="row">
+    <div class="col-md-12" style="text-align:center">
+       <h2>And the survey says...</h2>
+    </div>
+    
+  </div>
+-->
   
-  <h3>What is the % chance that an engineer will change his/her opinion after voicing it?</h3>
+  <div class="row">
+    <% @groups.each do |group| %>
+      <div class="col-md-6">
+        <h3>Is there more or less than a <span style="font-weight:bold; font-size:2em;"><%= group[:anchor_percent]%>%</span> chance that he/she will change the opinion later...</h3>
+        <h3>What is your estimate?</h3>
+          <div id="chart_<%= group[:anchor_percent]%>">
+            <svg style="height: 400px;"></svg>
+          </div>
+          <script>
+            nv.addGraph(function() {
+              
+              
+              
+              values = [];
+              <% (0..99).each do |i| %>
+              values.push({ "x": "<%= i+1 %>", "y": <%= group[:points][i] %> });
+              <% end %>
+              
+              var data = function() {
+                return [{
+                    "key": "Response",
+                    "values": values
+                }];
+              };
+              
+              var chart = nv.models.multiBarChart()
+                .showLegend(false)
+                .showControls(false)
+                .reduceXTicks(false)
+                .forceY([0,10]);
+
+              chart.xAxis
+                  .tickFormat(d3.format(',f'))
+                  .tickValues([10,20,30,40,50,60,70,80,90, 100])
+                  .axisLabel('%');
+
+              chart.yAxis
+                  .tickFormat(d3.format(',f'))
+                  .axisLabel('Number of Responses');
+
+              d3.select('#chart_<%= group[:anchor_percent] %> svg')
+                  .datum(data())
+                  .transition().duration(500)
+                  .call(chart)
+                  ;
+
+              nv.utils.windowResize(chart.update);
+
+            });
+        </script>
+
+        <p class="para" style="font-size:2em; text-align:center">
+          <b>Average Estimate: <%= group[:mean] %>%</b><br/>
+        </p>
+        <p class="para" style="font-size:1em; text-align:center">
+          Total Respondents: <%= group[:count] %><br/>
+        </p>
+      </div>
+    <% end %>
+  </div>
   
-  <% @groups.each do |group| %>
-    <p class="para" style="font-size:2em;">
-      <b><%= group[:mean] %>%</b>  (from <%= group[:count] %> participants anchored at <b><%= group[:anchor_percent] %>%</b>)<br/>
-    </p>
-  <% end %>
   
-  <%= image_tag "familyfeud.jpg" %>
-  
+
   <div style="display:none">
     <h3>Raw Data</h3>
     <table class="table">

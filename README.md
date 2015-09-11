@@ -8,13 +8,30 @@ This application support the [Getting Started with Ruby on Heroku](https://devce
 
 Make sure you have Ruby installed.  Also, install the [Heroku Toolbelt](https://toolbelt.heroku.com/).
 
+Also run Postgres on localhost:
+```psql -h localhost
+```
+
+Maybe you might need to restart Postgres:
+```pg_ctl -D /usr/local/var/postgres stop -s -m fast
+pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start
+```
+
+Install foreman:
+```gem install foreman```
+
 ```sh
 $ git clone git@github.com:heroku/ruby-getting-started.git
 $ cd ruby-getting-started
 $ bundle install
 $ bundle exec rake db:create db:migrate
-$ foreman start web
 ```
+
+Then either:
+```$ foreman start web
+```
+Or:
+```$ heroku local```
 
 Your app should now be running on [localhost:5000](http://localhost:5000/).
 

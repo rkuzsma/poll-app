@@ -9,6 +9,7 @@ class PollsController < ApplicationController
   # POST /polls.json
   def create
     @poll = Poll.new(poll_params)
+    @poll[:live] = is_live_setting
 
     if @poll.save
       render :thanks
@@ -18,16 +19,18 @@ class PollsController < ApplicationController
   end
 
   def results
-    @polls = Poll.all
-    group_a = {count: 0, sum: 0, anchor_percent: 3}
-    group_b = {count: 0, sum: 0, anchor_percent: 65}
+    @polls = Poll.where(live: is_live_setting)
+    group_a = {count: 0, sum: 0, points: Array.new(100){ |i| 0 }, anchor_percent: 3}
+    group_b = {count: 0, sum: 0, points: Array.new(100){ |i| 0 }, anchor_percent: 65}
     @groups = [group_a, group_b]
     
     @polls.each do |poll|
       group = poll.group_a ? group_a : group_b
+      group[:points][poll.value] += 1
       group[:count] += 1
       group[:sum] += poll.value
     end
+    
     [group_a,group_b].each do |group|
       if group[:count] > 0
         group[:mean] = group[:sum] / group[:count]
@@ -38,6 +41,12 @@ class PollsController < ApplicationController
   end
   
   private
+  
+    def is_live_setting
+      setting = Setting.where(name: 'is_live').first_or_create
+      !!setting[:value]
+    end
+    
     def poll_params
       params.require(:poll).permit(:group_a, :value)
     end
