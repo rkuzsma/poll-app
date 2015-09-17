@@ -13,7 +13,11 @@
 
   <script>
     function toggle() {
-      document.getElementById('question_1').style.display = 'none';
+      //document.getElementById('question_1').style.display = 'none';
+      document.getElementById('option_a').disabled = 'true';
+      document.getElementById('option_b').disabled = 'true';
+      document.getElementById('text_option_a').style.color = '#EEEEEE';
+      document.getElementById('text_option_b').style.color = '#EEEEEE';
       document.getElementById('question_2').style.display = 'block';
     }
   </script>
@@ -21,17 +25,20 @@
   <%= f.hidden_field :group_a %>
   
   <div id="question_1" style="display:block">
-    <p style="font-size: 1.5em;">After a software engineer has voiced his/her opinion, is there more or less than a <%= @poll.anchor_percent %>% chance that he/she will change his/her opinion later?</p>
-    
-    <input type="radio" name="option_a" onClick="toggle();"><span style="font-size: 1.5em">  More than a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</span></input><br/>
-    <input type="radio" name="option_b" onClick="toggle();"><span style="font-size: 1.5em">  Less than or equal to a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</span></input>
+    <h3>After a software engineer has voiced his/her opinion, is there more or less than a <%= @poll.anchor_percent %>% chance that he/she will change his/her opinion later?</h3>
+    <p>&nbsp;</p>
+    <h3 id='text_option_a'><input id='option_a' type="radio" name="option_a" onClick="toggle();"> More than a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</input></h3>
+    <p>&nbsp;</p>
+    <h3 id='text_option_b'><input id='option_b' type="radio" name="option_b" onClick="toggle();"> Less than or equal to a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</input></h3>
+    <p>&nbsp;</p>
   </div>
 
   <div id="question_2" style="display:none">
-    <p style="font-size: 1.5em;">After a software engineer has voiced his/her opinion, what is your best estimate for the % chance that he/she will change his/her opinion later?</p>
-    
+    <!--<h3>After a software engineer has voiced his/her opinion, what is your best estimate for the % chance that he/she will change his/her opinion later?</h3>
+    -->
     <div class="field">
-      <%= f.number_field :value %><span style="font-size: 1.5em"> % chance he/she will change his/her opinion</span>
+      <h3><%= f.number_field :value %> % chance he/she will change his/her opinion</h3>
+      <p>&nbsp;</p>
     </div>
     
     <div class="actions">
