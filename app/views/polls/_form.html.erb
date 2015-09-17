@@ -21,17 +21,17 @@
   <%= f.hidden_field :group_a %>
   
   <div id="question_1" style="display:block">
-    <p class="para">After a software engineer has voiced his/her opinion, is there more or less than a <%= @poll.anchor_percent %>% chance that he/she will change his/her opinion later?</p>
+    <p style="font-size: 1.5em;">After a software engineer has voiced his/her opinion, is there more or less than a <%= @poll.anchor_percent %>% chance that he/she will change his/her opinion later?</p>
     
-    <input type="radio" name="option_a" onClick="toggle();"> More than a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</input><br/>
-    <input type="radio" name="option_b" onClick="toggle();"> Less than or equal to a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</input>
+    <input type="radio" name="option_a" onClick="toggle();"><span style="font-size: 1.5em">  More than a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</span></input><br/>
+    <input type="radio" name="option_b" onClick="toggle();"><span style="font-size: 1.5em">  Less than or equal to a <%= @poll.anchor_percent %>% chance he/she will change his/her opinion</span></input>
   </div>
 
   <div id="question_2" style="display:none">
-    <p class="para">After a software engineer has voiced his/her opinion, what is your best estimate for the % chance that he/she will change his/her opinion later?</p>
+    <p style="font-size: 1.5em;">After a software engineer has voiced his/her opinion, what is your best estimate for the % chance that he/she will change his/her opinion later?</p>
     
     <div class="field">
-      <%= f.number_field :value %> % chance he/she will change his/her opinion
+      <%= f.number_field :value %><span style="font-size: 1.5em"> % chance he/she will change his/her opinion</span>
     </div>
     
     <div class="actions">

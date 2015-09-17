@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<div class="container" style="text-align:left">
+<div class="container" style="text-align:left;">
   
   <!-- <%= image_tag "familyfeud.jpg" %> --> 
   <!--
@@ -13,10 +13,14 @@
 -->
   
   <div class="row">
+    <% bgcolor='#FFFFFF' %>
+    <% borderstyle='border-right: thick solid #EEEEEE;' %>
     <% @groups.each do |group| %>
-      <div class="col-md-6">
+      <div class="col-md-6" style="padding-right: 30px; padding-left: 30px; <%= borderstyle%>;">
+        <% borderstyle = '' %>
+        <% bgcolor='#EFEFEF' %>
         <h3>Is there more or less than a <span style="font-weight:bold; font-size:2em;"><%= group[:anchor_percent]%>%</span> chance that he/she will change the opinion later...</h3>
-        <h3>What is your estimate?</h3>
+        <h3><b>What is your estimate?</b></h3>
           <div id="chart_<%= group[:anchor_percent]%>">
             <svg style="height: 400px;"></svg>
           </div>
@@ -63,8 +67,8 @@
             });
         </script>
 
-        <p class="para" style="font-size:2em; text-align:center">
-          <b>Average Estimate: <%= group[:mean] %>%</b><br/>
+        <p class="para" style="font-size:1.5em; text-align:center">
+          Average Estimate: <span style="font-weight:bold; font-size:2em;"><%= group[:mean] %>%</span><br/>
         </p>
         <p class="para" style="font-size:1em; text-align:center">
           Total Respondents: <%= group[:count] %><br/>
